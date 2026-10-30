@@ -1,0 +1,31 @@
+# Atlantis RP — Firebase shared server
+
+## Changes in this build
+- The game menu now has one fixed server: `Atlantis RP` (`srv/main`).
+- Player-created servers and PeerJS host creation are disabled.
+- Email/password registration and sign-in use Firebase Authentication.
+- Optional guest sign-in is available; guest progress is tied to that browser/device.
+- Firebase Realtime Database stores player presence, player/army data and cloud progress.
+- The original 3D world and gameplay are retained; local save remains as a fallback.
+
+## Firebase project
+This HTML already contains the Firebase Web App configuration supplied for project `atlantis-c1cb2`, using the `europe-west1` Realtime Database.
+
+## Before publishing
+1. In Firebase Authentication, keep **Email/Password** and **Anonymous** sign-in enabled.
+2. Keep the Realtime Database security rules you published for `data/users` and `srv/main`.
+3. In Firebase Authentication > Settings > Authorized domains, add your GitHub Pages domain after publishing (for example `YOURNAME.github.io`).
+4. Upload this HTML to your GitHub repository and name it `index.html`.
+5. Enable GitHub Pages.
+6. Open the published HTTPS page on two devices/browsers:
+   - Register/sign in with an email account on both (or use the same account for a quick test).
+   - Enter the single Atlantis RP server.
+   - Confirm each player can see the other moving.
+   - Confirm progress is restored after closing and reopening the game.
+
+## Important limitations
+- A Firebase-backed shared room is not a dedicated authoritative game server. Client-side money/XP and gameplay actions are not cheat-proof.
+- The current per-user security rules intentionally prevent one player from editing another player's record. Privileged actions such as promoting another player's army rank need a trusted Cloud Function/backend before they can work securely.
+- Guest accounts are tied to the same browser/device. Use email/password accounts for sign-in across devices.
+- Test the live GitHub Pages URL before converting the game to APK. For Android WebView, retain the HTTPS hosted origin and add the relevant domain to Firebase Authorized domains.
+- Never put Firebase Admin service-account credentials in this HTML. The Firebase web config is intended for client use.
